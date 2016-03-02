@@ -1,2 +1,3 @@
-# GitlabConsole
+# gitlab-cli
+
 Gitlab console tool.

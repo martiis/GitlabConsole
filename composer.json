@@ -1,7 +1,7 @@
 {
-    "name": "martiis/gitlab-console",
+    "name": "martiis/gitlab-cli",
     "description": "Gitlab console tool",
-    "type": "library",
+    "type": "project",
     "license": "MIT",
     "authors": [
         {
