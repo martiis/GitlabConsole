@@ -15,31 +15,14 @@
  * http://www.nfq.lt
  */
 
-namespace Martiis\GitlabCLI\Command;
+namespace Martiis\GitlabCLI;
 
-use Martiis\GitlabCLI\Bag;
-use Symfony\Component\Console\Command\Command;
-
-abstract class AbstractBagAwareCommand extends Command
+interface BagAwareInterface
 {
     /**
-     * @var Bag
-     */
-    private $bag;
-
-    /**
-     * @return Bag
-     */
-    public function getBag()
-    {
-        return $this->bag;
-    }
-
-    /**
+     * Sets bag into class.
+     *
      * @param Bag $bag
      */
-    public function setBag($bag)
-    {
-        $this->bag = $bag;
-    }
+    public function setBag(Bag $bag);
 }

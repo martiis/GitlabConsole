@@ -3,7 +3,7 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use Martiis\GitlabCLI\Bag;
-use Martiis\GitlabCLI\Command\AbstractBagAwareCommand;
+use Martiis\GitlabCLI\BagAwareInterface;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\Finder\Finder;
@@ -34,7 +34,7 @@ foreach ($finder->in(__DIR__ . '/../src/Command')->files() as $file) {
     if (stripos($fname, 'Abstract') === false && stripos($fname, 'Interface') === false) {
         $ns = 'Martiis\\GitlabCLI\\Command\\' . $fname;
         $instance = new $ns();
-        if ($instance instanceof AbstractBagAwareCommand) {
+        if ($instance instanceof BagAwareInterface) {
             $instance->setBag($bag);
         }
         $app->add($instance);
