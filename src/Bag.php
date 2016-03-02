@@ -2,7 +2,7 @@
 
 namespace Martiis\GitlabCLI;
 
-class Bag implements \ArrayAccess, \Iterator, \Countable
+class Bag implements BagInterface
 {
     /**
      * @var array
@@ -20,11 +20,7 @@ class Bag implements \ArrayAccess, \Iterator, \Countable
     }
 
     /**
-     * Checks if value is set in bag.
-     *
-     * @param string $key
-     *
-     * @return bool
+     * {@inheritdoc}
      */
     public function has($key)
     {
@@ -32,10 +28,7 @@ class Bag implements \ArrayAccess, \Iterator, \Countable
     }
 
     /**
-     * Sets value in bag.
-     *
-     * @param string $key
-     * @param mixed  $value
+     * {@inheritdoc}
      */
     public function set($key, $value)
     {
@@ -43,11 +36,7 @@ class Bag implements \ArrayAccess, \Iterator, \Countable
     }
 
     /**
-     * Retrieves value from the bag.
-     *
-     * @param string $key
-     *
-     * @return mixed|null
+     * {@inheritdoc}
      */
     public function get($key)
     {
