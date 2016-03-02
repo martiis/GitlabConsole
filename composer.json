@@ -1,0 +1,14 @@
+{
+    "name": "martiis/gitlab-console",
+    "description": "Gitlab console tool",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Martynas Sudintas",
+            "email": "martynas12@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {}
+}
