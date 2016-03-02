@@ -57,7 +57,7 @@ class MergeRequestOpenCommand extends AbstractProjectAwareCommand
 
         $io = $this->getIO($input, $output);
         foreach (['target' => 'Target branch', 'head' => 'Head branch'] as $name => $qstn) {
-            $input->setArgument($name, $io->ask($qstn));
+            !$input->hasArgument($name) && $input->setArgument($name, $io->ask($qstn));
         }
     }
 }

@@ -36,20 +36,22 @@ abstract class AbstractProjectAwareCommand extends AbstractBagAwareCommand
     {
         parent::interact($input, $output);
 
-        $input->setArgument(
-            'project',
-            $this->getIO($input, $output)->ask(
-                'Project (f.e. team/project)',
-                null,
-                function ($value) {
-                    if (!preg_match('/^[\w\d]+\/[\w\d]+$/i', $value)) {
-                        throw new \LogicException('Invalid value');
-                    }
+        if (!$input->hasArgument('project')) {
+            $input->setArgument(
+                'project',
+                $this->getIO($input, $output)->ask(
+                    'Project (f.e. team/project)',
+                    null,
+                    function ($value) {
+                        if (!preg_match('/^[\w\d]+\/[\w\d]+$/i', $value)) {
+                            throw new \LogicException('Invalid value');
+                        }
 
-                    return $value;
-                }
-            )
-        );
+                        return $value;
+                    }
+                )
+            );
+        }
     }
 
     /**
