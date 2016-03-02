@@ -12,6 +12,31 @@
     "minimum-stability": "stable",
     "require": {
         "symfony/console": "~2.8,<=3.0",
-        "guzzlehttp/guzzle": "~6.1"
+        "symfony/yaml": "~2.8,<=3.0",
+        "symfony/finder": "~2.8,<=3.0",
+        "guzzlehttp/guzzle": "~6.1",
+        "incenteev/composer-parameter-handler" : "~2.1"
+    },
+    "require-dev": {
+        "symfony/var-dumper": "~2.8,<=3.0"
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters"
+        ],
+        "post-update-cmd": [
+            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters"
+        ]
+    },
+    "config": {
+        "bin-dir": "bin"
+    },
+    "extra": {
+        "incenteev-parameters": {
+            "file": "app/parameters.yml"
+        }
+    },
+    "autoload": {
+        "psr-4": { "Martiis\\GitlabCLI\\": "src/" }
     }
 }

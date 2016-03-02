@@ -1,0 +1,3 @@
+parameters:
+  gitlab_host: http://localhost
+  gitlab_token: secret
