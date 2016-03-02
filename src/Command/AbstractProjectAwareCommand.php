@@ -44,7 +44,7 @@ abstract class AbstractProjectAwareCommand extends AbstractBagAwareCommand
                     null,
                     function ($value) {
                         if (!preg_match('/^[\w\d]+\/[\w\d]+$/i', $value)) {
-                            throw new \LogicException('Invalid value');
+                            throw new \LogicException('Invalid project.');
                         }
 
                         return $value;
