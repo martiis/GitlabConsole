@@ -10,5 +10,8 @@
         }
     ],
     "minimum-stability": "stable",
-    "require": {}
+    "require": {
+        "symfony/console": "~2.8,<=3.0",
+        "guzzlehttp/guzzle": "~6.1"
+    }
 }
