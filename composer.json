@@ -15,6 +15,7 @@
         "symfony/yaml": "~2.8,<=3.0",
         "symfony/finder": "~2.8,<=3.0",
         "guzzlehttp/guzzle": "~6.1",
+        "doctrine/cache": "~1.6",
         "incenteev/composer-parameter-handler" : "~2.1"
     },
     "require-dev": {

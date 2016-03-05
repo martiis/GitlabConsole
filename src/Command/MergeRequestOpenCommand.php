@@ -36,16 +36,7 @@ class MergeRequestOpenCommand extends AbstractProjectAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        /** @var ClientInterface $client */
-        $client = $this->getBag()->get('guzzle');
-        $response = $client->request('GET', 'projects');
 
-        $this
-            ->getIO($input, $output)
-            ->block(json_encode(
-                json_decode($response->getBody()->getContents()),
-                JSON_PRETTY_PRINT
-            ));
     }
 
     /**

@@ -2,6 +2,7 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
+use Doctrine\Common\Cache\FilesystemCache;
 use Martiis\GitlabCLI\Bag;
 use Martiis\GitlabCLI\BagAwareInterface;
 use Symfony\Component\Console\Application;
@@ -25,6 +26,7 @@ $parameters['guzzle'] = new \GuzzleHttp\Client(
         ]
     ]
 );
+$parameters['cache'] = new FilesystemCache(__DIR__ . '/../cache');
 
 $bag = new Bag($parameters);
 
