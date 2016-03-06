@@ -19,7 +19,7 @@ class MergeRequestOpenCommand extends AbstractProjectAwareCommand
 
         $this
             ->setName('merge-request:open')
-            ->setDescription('Opens merge request.')
+            ->setDescription('Opens a merge request.')
             ->addArgument(
                 'source',
                 InputArgument::REQUIRED,
@@ -45,7 +45,7 @@ class MergeRequestOpenCommand extends AbstractProjectAwareCommand
         /** @var FilesystemCache $cache */
         $cache = $this->getBag()->get('cache');
         if (!$cache->contains($input->getArgument('project'))) {
-            throw new \LogicException('Project namespace not found!');
+            throw new \LogicException('Project namespace not found! Try to clear cache.');
         }
 
         $id = $cache->fetch($input->getArgument('project'));

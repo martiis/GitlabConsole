@@ -20,6 +20,10 @@ if ($parameters['gitlab_host'][strlen($parameters['gitlab_host']) - 1] !== '/') 
 
 $parameters['guzzle'] = new \GuzzleHttp\Client(
     [
+        'headers' => [
+            'Accept' => 'application/json',
+            'Content-Type' => 'application/json',
+        ],
         'base_uri' => $parameters['gitlab_host'] . 'api/v3/',
         'query' => [
             'private_token' => $parameters['gitlab_token'],
