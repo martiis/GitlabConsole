@@ -2,6 +2,7 @@
 
 namespace Martiis\GitlabCLI\Command;
 
+use Doctrine\Common\Cache\FilesystemCache;
 use GuzzleHttp\ClientInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -36,7 +37,15 @@ class MergeRequestOpenCommand extends AbstractProjectAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        /** @var FilesystemCache $cache */
+        $cache = $this->getBag()->get('cache');
+        if (!$cache->contains($input->getArgument('project'))) {
+            throw new \LogicException('Project namespace not found!');
+        }
 
+//        /** @var ClientInterface $client */
+//        $client = $this->getBag()->get('guzzle');
+//        $response = json_decode($client->request('GET', 'projects')->getBody()->getContents(), true);
     }
 
     /**
