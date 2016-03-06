@@ -50,7 +50,7 @@ class CacheClearCommand extends AbstractProjectAwareCommand
         $response = json_decode($client->request('GET', 'projects')->getBody()->getContents(), true);
 
         foreach ($response as $project) {
-            if ($cache->save($project['path_with_namespace']) === false) {
+            if ($cache->save(stripslashes($project['path_with_namespace']), $project['id']) === false) {
                 throw new \LogicException('Failed to into write cache.');
             }
         }

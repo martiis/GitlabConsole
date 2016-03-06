@@ -21,14 +21,19 @@ class MergeRequestOpenCommand extends AbstractProjectAwareCommand
             ->setName('merge-request:open')
             ->setDescription('Opens merge request.')
             ->addArgument(
-                'target',
+                'source',
                 InputArgument::REQUIRED,
                 'Branch to merge from.'
             )
             ->addArgument(
-                'head',
+                'target',
                 InputArgument::REQUIRED,
                 'Branch to merge to'
+            )
+            ->addArgument(
+                'title',
+                InputArgument::REQUIRED,
+                'Merge request title'
             );
     }
 
@@ -43,9 +48,26 @@ class MergeRequestOpenCommand extends AbstractProjectAwareCommand
             throw new \LogicException('Project namespace not found!');
         }
 
-//        /** @var ClientInterface $client */
-//        $client = $this->getBag()->get('guzzle');
-//        $response = json_decode($client->request('GET', 'projects')->getBody()->getContents(), true);
+        $id = $cache->fetch($input->getArgument('project'));
+        /** @var ClientInterface $client */
+        $client = $this->getBag()->get('guzzle');
+        $response = $client->request(
+            'POST',
+            sprintf('projects/%s/merge_requests', $id),
+            [
+                'headers' => [
+                    'Content-Type' => 'application/json'
+                ],
+                'body' => json_encode(
+                    [
+                        'id' => $id,
+                        'target_branch' => $input->getArgument('target'),
+                        'source_branch' => $input->getArgument('source'),
+                        'title' => $input->getArgument('title'),
+                    ]
+                )
+            ]
+        );
     }
 
     /**
@@ -56,7 +78,12 @@ class MergeRequestOpenCommand extends AbstractProjectAwareCommand
         parent::interact($input, $output);
 
         $io = $this->getIO($input, $output);
-        foreach (['target' => 'Target branch', 'head' => 'Head branch'] as $name => $qstn) {
+        $fields = [
+            'source' => 'Source branch',
+            'target' => 'Target branch',
+            'title' => 'Title'
+        ];
+        foreach ($fields as $name => $qstn) {
             $input->getArgument($name) === null && $input->setArgument($name, $io->ask($qstn));
         }
     }
