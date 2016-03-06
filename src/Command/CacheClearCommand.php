@@ -36,7 +36,7 @@ class CacheClearCommand extends AbstractProjectAwareCommand
 
         foreach ($response as $project) {
             if ($cache->save(stripslashes($project['path_with_namespace']), $project['id']) === false) {
-                throw new \LogicException('Failed to into write cache.');
+                throw new \LogicException('Failed to write into cache.');
             }
         }
 
