@@ -96,7 +96,7 @@ class MergeRequestCloseCommand extends AbstractProjectAwareCommand
 
         $this
             ->getIO($input, $output)
-            ->success(sprintf('Merge-request #%s successfuly closed.', $input->getArgument('iid')));
+            ->success(sprintf('Merge-request #%s successfully closed.', $input->getArgument('iid')));
     }
 
     /**

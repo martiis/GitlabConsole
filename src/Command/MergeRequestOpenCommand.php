@@ -68,6 +68,12 @@ class MergeRequestOpenCommand extends AbstractProjectAwareCommand
                 )
             ]
         );
+
+        $encoded = json_decode($response->getBody()->getContents(), true);
+
+        $this
+            ->getIO($input, $output)
+            ->success(sprintf('Successfully opened new #%s merge-request!', $encoded['iid']));
     }
 
     /**
