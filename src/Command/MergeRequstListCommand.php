@@ -73,7 +73,7 @@ class MergeRequstListCommand extends AbstractProjectAwareCommand
                 date('Y-m-d H:i', strtotime($item['created_at'])),
                 date('Y-m-d H:i', strtotime($item['updated_at'])),
                 $item['state'],
-                $item['merge_status'],
+                isset($item['merge_status']) ? $item['merge_status'] : '',
             ];
         }
 
