@@ -73,7 +73,13 @@ class MergeRequestOpenCommand extends AbstractProjectAwareCommand
 
         $this
             ->getIO($input, $output)
-            ->success(sprintf('Successfully opened new #%s merge-request!', $encoded['iid']));
+            ->success(sprintf(
+                "Successfully opened new #%s merge-request!\n\n"
+                . "Link: %sonego/api/merge_requests/%s",
+                $encoded['iid'],
+                $this->getBag()->get('gitlab_host'),
+                $encoded['iid']
+            ));
     }
 
     /**
