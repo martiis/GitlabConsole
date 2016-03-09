@@ -70,8 +70,8 @@ class MergeRequstListCommand extends AbstractProjectAwareCommand
                 empty($item['author']['name']) ? $item['author']['username'] : $item['author']['name'],
                 $item['source_branch'],
                 $item['target_branch'],
-                date('Y-m-d H:i', strtotime($item['created_at'])),
-                date('Y-m-d H:i', strtotime($item['updated_at'])),
+                date('y-m-d H:i', strtotime($item['created_at'])),
+                date('y-m-d H:i', strtotime($item['updated_at'])),
                 $item['state'],
                 isset($item['merge_status']) ? $item['merge_status'] : '',
             ];
