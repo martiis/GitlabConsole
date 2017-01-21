@@ -27,11 +27,11 @@ class CacheClearCommand extends AbstractProjectAwareCommand
         $this->getIO($input, $output)->comment('Clearing out cache...');
 
         /** @var FilesystemCache $cache */
-        $cache = $this->getBag()->get('cache');
+        $cache = $this->container->get('cache');
         $cache->flushAll();
 
         /** @var ClientInterface $client */
-        $client = $this->getBag()->get('guzzle');
+        $client = $this->container->get('guzzle');
         $response = json_decode($client->request('GET', 'projects')->getBody()->getContents(), true);
 
         foreach ($response as $project) {

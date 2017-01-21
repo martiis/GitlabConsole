@@ -33,14 +33,14 @@ class MergeRequestCloseCommand extends AbstractProjectAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         /** @var FilesystemCache $cache */
-        $cache = $this->getBag()->get('cache');
+        $cache = $this->container->get('cache');
         if (!$cache->contains($input->getArgument('project'))) {
             throw new \LogicException('Project namespace not found! Try to clear cache.');
         }
 
         $id = $cache->fetch($input->getArgument('project'));
         /** @var ClientInterface $client */
-        $client = $this->getBag()->get('guzzle');
+        $client = $this->container->get('guzzle');
         $response = $client->request(
             'GET',
             sprintf('projects/%s/merge_requests', $id),
