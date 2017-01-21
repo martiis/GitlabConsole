@@ -1,0 +1,19 @@
+parameters:
+    guzzle_config:
+        headers:
+            Accept: application/json
+            Content-Type: application/json
+        base_uri: "%gitlab_host%api/v3/"
+        query:
+            private_token: "%gitlab_token%"
+
+services:
+    cache:
+        class: Doctrine\Common\Cache\FilesystemCache
+        arguments:
+            - "%root_dir%/cache"
+
+    guzzle:
+        class: GuzzleHttp\Client
+        arguments:
+            - "%guzzle_config%"

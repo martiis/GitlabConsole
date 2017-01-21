@@ -2,15 +2,15 @@
 
 namespace Martiis\GitlabCLI\Command;
 
-use Martiis\GitlabCLI\BagAwareInterface;
-use Martiis\GitlabCLI\BagInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
-abstract class AbstractProjectAwareCommand extends Command implements BagAwareInterface
+abstract class AbstractProjectAwareCommand extends Command implements ContainerAwareInterface
 {
     /**
      * @var SymfonyStyle
@@ -18,9 +18,9 @@ abstract class AbstractProjectAwareCommand extends Command implements BagAwareIn
     private $io;
 
     /**
-     * @var BagInterface
+     * @var ContainerInterface
      */
-    private $bag;
+    protected $container;
 
     /**
      * {@inheritdoc}
@@ -80,16 +80,8 @@ abstract class AbstractProjectAwareCommand extends Command implements BagAwareIn
     /**
      * {@inheritdoc}
      */
-    public function setBag(BagInterface $bag)
+    public function setContainer(ContainerInterface $container = null)
     {
-        $this->bag = $bag;
-    }
-
-    /**
-     * @return BagInterface
-     */
-    public function getBag()
-    {
-        return $this->bag;
+        $this->container = $container;
     }
 }

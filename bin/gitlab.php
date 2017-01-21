@@ -2,49 +2,24 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use Doctrine\Common\Cache\FilesystemCache;
-use Martiis\GitlabCLI\Bag;
-use Martiis\GitlabCLI\BagAwareInterface;
+use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Console\Application;
-use Symfony\Component\Finder\SplFileInfo;
-use Symfony\Component\Finder\Finder;
-use Symfony\Component\Yaml\Yaml;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+use Martiis\GitlabCLI\Compiler\HostTrailCompiler;
 
-$app = new Application('Gitlab CLI', '0.1');
-$parameters = Yaml::parse(__DIR__ . '/../app/parameters.yml')['parameters'];
-$finder = Finder::create();
+$container = new ContainerBuilder();
+$container->setParameter('root_dir', dirname(__DIR__));
 
-if ($parameters['gitlab_host'][strlen($parameters['gitlab_host']) - 1] !== '/') {
-    $parameters['gitlab_host'] .= '/';
-}
+$container
+    ->register('app', Application::class)
+    ->setArguments(['Gitlab CLI', '0.2']);
 
-$parameters['guzzle'] = new \GuzzleHttp\Client(
-    [
-        'headers' => [
-            'Accept' => 'application/json',
-            'Content-Type' => 'application/json',
-        ],
-        'base_uri' => $parameters['gitlab_host'] . 'api/v3/',
-        'query' => [
-            'private_token' => $parameters['gitlab_token'],
-        ]
-    ]
-);
-$parameters['cache'] = new FilesystemCache(__DIR__ . '/../cache');
+$loader = new YamlFileLoader($container, new FileLocator(dirname(__DIR__) . '/app'));
+$loader->load('parameters.yml');
+$loader->load('services.yml');
 
-$bag = new Bag($parameters);
+$container->addCompilerPass(new HostTrailCompiler());
+$container->compile();
 
-/** @var SplFileInfo $file */
-foreach ($finder->in(__DIR__ . '/../src/Command')->files() as $file) {
-    $fname = pathinfo($file->getBasename(), PATHINFO_FILENAME);
-    if (stripos($fname, 'Abstract') === false && stripos($fname, 'Interface') === false) {
-        $ns = 'Martiis\\GitlabCLI\\Command\\' . $fname;
-        $instance = new $ns();
-        if ($instance instanceof BagAwareInterface) {
-            $instance->setBag($bag);
-        }
-        $app->add($instance);
-    }
-}
-
-$app->run();
+$container->get('app')->run();
