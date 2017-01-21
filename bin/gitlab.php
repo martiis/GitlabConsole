@@ -6,10 +6,12 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Console\Application;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+use Martiis\GitlabCLI\Compiler\CommandCompiler;
 use Martiis\GitlabCLI\Compiler\HostTrailCompiler;
 
 $container = new ContainerBuilder();
 $container->setParameter('root_dir', dirname(__DIR__));
+$container->set('container', $container);
 
 $container
     ->register('app', Application::class)
@@ -19,6 +21,7 @@ $loader = new YamlFileLoader($container, new FileLocator(dirname(__DIR__) . '/ap
 $loader->load('parameters.yml');
 $loader->load('services.yml');
 
+$container->addCompilerPass(new CommandCompiler());
 $container->addCompilerPass(new HostTrailCompiler());
 $container->compile();
 
